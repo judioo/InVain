@@ -1,19 +1,5 @@
 package Velti::VoteParser;
+use Moose;
 
-use strict;
-use warnings;
-
-sub new {
-  my $class = shift;
-  my %args  = @_;
-  bless \%args, ref($class) || $class;
-}
-
-sub file {
-  my $self  = shift;
-  return (exists $self->{file})
-    ? $self->{file}
-    : undef;
-}
-
+  has 'file'  => (is => 'ro', isa => 'Str');
 1;

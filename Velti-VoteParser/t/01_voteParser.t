@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::Most tests => 2;
+use Test::Most;
 use FindBin;
 
 use lib "$FindBin::Bin/../lib";
@@ -22,3 +22,5 @@ use_ok($CLASS);
   my $obj   = $CLASS->new( file => $file );
   cmp_ok($obj->file, 'eq', $file);
 }
+
+done_testing();
