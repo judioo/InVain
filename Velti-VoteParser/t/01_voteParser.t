@@ -6,4 +6,5 @@ use FindBin;
 use lib "$FindBin::Bin/../lib";
 use lib "$FindBin::Bin/lib";
 
-use_ok("Velti::VoteParser");
+our $CLASS  = "Velti::VoteParser";
+use_ok($CLASS);
