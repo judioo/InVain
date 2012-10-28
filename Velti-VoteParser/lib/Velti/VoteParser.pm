@@ -6,7 +6,14 @@ use warnings;
 sub new {
   my $class = shift;
   my %args  = @_;
-  return \%args, ref($class) || $class;
+  bless \%args, ref($class) || $class;
+}
+
+sub file {
+  my $self  = shift;
+  return (exists $self->{file})
+    ? $self->{file}
+    : undef;
 }
 
 1;

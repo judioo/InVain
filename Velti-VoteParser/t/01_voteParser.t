@@ -12,7 +12,13 @@ use_ok($CLASS);
 
 # new 
 {
-$DB::single=1;
   my $obj = $CLASS->new();
   isa_ok($obj, $CLASS);
+}
+
+# new with file
+{
+  my $file  = "$FindBin::Script/samples/vote.txt";
+  my $obj   = $CLASS->new( file => $file );
+  cmp_ok($obj->file, 'eq', $file);
 }
