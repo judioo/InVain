@@ -39,7 +39,7 @@ our $base_dir = ( -d "$Bin/samples" )
 # 
 # decode string into key -> value pairs then validate
 
-# decode
+# _decode_row
 {
   my $obj       = $CLASS->new();
   my $row       = "VOTE 1168041980 Campaign:ssss_uk_01B Validity:during ".
@@ -54,7 +54,7 @@ our $base_dir = ( -d "$Bin/samples" )
   is_deeply($res, \@expected, "decode string");
 }
 
-# validate
+# _validate_row
 # pass array (will be from decoder) into validator and check we have all the fields required.
 # print failing arrays to screen.
 # return 1 if array is valid
@@ -71,6 +71,28 @@ our $base_dir = ( -d "$Bin/samples" )
 
   is($obj->_validate_row(\@invalid_array),0,"invaidate row");
 
+}
+
+# validate 
+# method should iterate over rows in array $self->file, decode and then validate
+# basically a warper for the two methods above
+# store validate rows as an array of hashes in attribute $self->rows 
+{
+  my $file  = $base_dir."validate_votes.txt";
+  my $obj   = $CLASS->new( file => $file);
+
+  is(scalar @{$obj->file}, 3, "found 3 rows in file");
+
+  # bit of a cheat BUT we know this method has been tested
+  my %val1  = @{$obj->_decode_row($obj->file->[0])};
+  my %val2  = @{$obj->_decode_row($obj->file->[2])};
+
+  $obj->validate;
+
+  is(scalar @{$obj->rows}, 2,"found 2 vaildate rows");
+
+  is_deeply($obj->rows->[0], \%val1, "validated row #1 matches");
+  is_deeply($obj->rows->[1], \%val2, "validated row #2 matches");
 }
 
 

@@ -12,6 +12,7 @@ use Carp;
     => via { [File::Slurp::read_file( $_[0], chomp => 1 )] };
 
   has 'file'  => (is => 'ro', isa => 'VP::File::Slurp', coerce => 1);
+  has 'rows'  => (is => 'rw', isa => 'ArrayRef[Hash]', default => sub{[]});
 
 our %rowOrder = (
   0   => 'VOTE',
@@ -43,5 +44,16 @@ sub _validate_row {
     }
   }
   return 1;
+}
+
+sub validate {
+  my $self  = shift;
+
+  for my $row (@{$self->file}) {
+    my $vals  = $self->_decode_row($row);
+    # push only if valid
+    push @{$self->rows}, {@$vals}
+      if $self->_validate_row($vals);
+  }
 }
 1;
