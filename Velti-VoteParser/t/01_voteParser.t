@@ -27,4 +27,27 @@ use_ok($CLASS);
 #is_deeply($obj->file, \@array);
 }
 
+
+# task states that the parser needs to 
+# a) ensure string is well formed (all required fields are present)
+# wekk formed string gives
+# VOTE 1168041980 Campaign:ssss_uk_01B Validity:during Choice:Tupele CONN:MIG00VU MSISDN:00777778429999 GUID:A12F2CF1-FDD4-46D4-A582-AD58BAA05E19 Shortcode:63334
+# 
+# decode string into key -> value pairs then validate
+
+# decode
+{
+  my $obj       = $CLASS->new();
+  my $row       = "VOTE 1168041980 Campaign:ssss_uk_01B Validity:during ".
+                  "Choice:Tupele CONN:MIG00VU MSISDN:00777778429999 ".
+                  "GUID:A12F2CF1-FDD4-46D4-A582-AD58BAA05E19 Shortcode:63334";
+
+  my @expected  = qw/VOTE 1168041980 Campaign ssss_uk_01B Validity during
+                    Choice Tupele CONN MIG00VU MSISDN 00777778429999 
+                    GUID A12F2CF1-FDD4-46D4-A582-AD58BAA05E19 Shortcode 63334/;
+    
+  my $res       = $obj->_decode_row($row);
+  is_deeply($res, \@expected, "decode string");
+}
+
 done_testing();

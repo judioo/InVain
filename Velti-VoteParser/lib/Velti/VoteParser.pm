@@ -11,4 +11,13 @@ use File::Slurp ();
     => via { [File::Slurp::read_file( $_[0], chomp => 1 )] };
 
   has 'file'  => (is => 'ro', isa => 'VP::File::Slurp', coerce => 1);
+
+
+sub _decode_row {
+  my $self  = shift;
+  my $row   = shift;
+  my @array = map { split ":", $_ } (split " ", $row);
+
+  return \@array;
+}
 1;
