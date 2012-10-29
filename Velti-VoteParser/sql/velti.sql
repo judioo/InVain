@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS `vote`;
 CREATE TABLE `vote` (
   id int(11) unsigned NOT NULL auto_increment,
-  vote  timestamp,
+  vote        timestamp,
   campaign    varchar(100) NOT NULL,
   validity    varchar(6) NOT NULL,
   choice      varchar(100) NOT NULL,
