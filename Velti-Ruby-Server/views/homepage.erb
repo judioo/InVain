@@ -1,0 +1,10 @@
+<h2>Campaigns</h2>
+<%if @rs.count > 0 %>
+<ul>
+  <% @rs.each do |row| %>
+  <li><a href="/campaign/<%= escape(row.campaign) %>"><%= row.campaign %></a>
+  <% end %>
+</ul>
+<% else %>
+<h4>no rows found</h4>
+<% end %>
