@@ -6,6 +6,7 @@ use FindBin qw/$Bin/;
 use Getopt::Long;
 use Data::Dumper;
 use feature qw/say/;
+use DBI;
 use DateTime;
 
 use lib "$Bin/lib";
@@ -29,6 +30,23 @@ sub format_keys {
 
   return $row;
 }
+
+sub insert_row {
+  my $dbh   = shift;
+  my $row   = shift;
+  my @cols  = qw/vote campaign validity choice conn msisdn guid shortcode/;
+  
+  my $statement = "INSERT INTO vote (".(join ',', @cols).") VALUES (?,?,?,?,?,?,?,?)";
+  $dbh->do($statement,undef,(map{ $row->{$_} } @cols))
+    or die "could not INSERT $DBI::errstr\n";
+}
+
+
+
+# setup
+my $ddbh = DBI->connect("dbi:mysql:velti:localhost:3306","velti","velti123")
+            or die "cannot connect to DB: $DBI::errstr";
+
 my $vp  = Velti::VoteParser->new( file => $file );
 
 $vp->validate;
@@ -45,6 +63,8 @@ for my $row (@{$vp->rows}) {
   $row  = format_keys($row);
   # convert epoch to datetime
   $row->{vote}  = DateTime->from_epoch( epoch => $row->{vote} );
+
+  insert_row($ddbh, $row);
 }
 
 say "Done!";

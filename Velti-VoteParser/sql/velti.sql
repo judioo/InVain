@@ -11,6 +11,7 @@ CREATE TABLE `vote` (
   msisdn      varchar(100) NOT NULL,
   guid        varchar(100) NOT NULL,
   shortcode   varchar(100) NOT NULL,
+  KEY `campaign_choice_validity` (`campaign`, `choice`, `validity`),
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
