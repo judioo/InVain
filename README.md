@@ -1,4 +1,4 @@
-[InVain][1] is a some test app.
+[InVain][1] is a small test app.
 
 tasks:
   1. File Parser
@@ -6,5 +6,6 @@ tasks:
 
   2. Web Server
     Write a web server which displays the stored data
+
 
 [1]: http://translate.google.com/#lv/en/velti
