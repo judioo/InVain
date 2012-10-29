@@ -1,0 +1,13 @@
+<h1>Stats for '<%= campaign_title %>'</h1>
+
+<%= FOREACH row = stats.rows %>
+  <li>Choice: <%= row.choice %>, votes: <%= row.count %>, validity: <%= row.validity %></li>
+<% END %>
+
+<p><b>Campaign Votes Stats</b></p>
+<li>pre <%= stats.pre %></li>
+<li>during <%= stats.during %></li>
+<li>post <%= stats.post %></li>
+<li>total <%= stats.total %></li>
+
+<a href="/homepage">All Campaigns</a>

@@ -1,0 +1,4 @@
+<h1>Campaigns</h1>
+<% FOREACH row = campaigns %>
+  <li><a href="/campaign/<%= row.campaign %>"><%= row.campaign %></a>
+<%= END %>
