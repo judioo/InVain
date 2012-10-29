@@ -39,7 +39,7 @@ sub _validate_row {
 
   for my $key (keys %rowOrder) {
     unless($array->[$key] eq $rowOrder{$key}) {
-      carp $rowOrder{$key}." failed for row:\n@$array";
+      carp "failed to find '".$rowOrder{$key}."' in position '$key' for row:\n@$array\n\n";
       return 0
     }
   }
