@@ -54,4 +54,24 @@ our $base_dir = ( -d "$Bin/samples" )
   is_deeply($res, \@expected, "decode string");
 }
 
+# validate
+# pass array (will be from decoder) into validator and check we have all the fields required.
+# print failing arrays to screen.
+# return 1 if array is valid
+{
+  my $obj           = $CLASS->new();
+  my @valid_array   = qw/VOTE 1168041980 Campaign ssss_uk_01B Validity during
+                    Choice Tupele CONN MIG00VU MSISDN 00777778429999 
+                    GUID A12F2CF1-FDD4-46D4-A582-AD58BAA05E19 Shortcode 63334/;
+  is($obj->_validate_row(\@valid_array),1,"vaidate row");
+
+  my @invalid_array = qw/VOTE 1168041980 Campaign ssss_uk_01B Valid during
+                    Choice Tupele CONN MIG00VU MSISDN 00777778429999 
+                    GUID A12F2CF1-FDD4-46D4-A582-AD58BAA05E19 Shortcode 63334/;
+
+  is($obj->_validate_row(\@invalid_array),0,"invaidate row");
+
+}
+
+
 done_testing();
